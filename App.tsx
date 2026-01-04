@@ -11,12 +11,14 @@ import Timeline from './components/Timeline';
 import Testimonials from './components/Testimonials';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
+import BackgroundShader from './components/BackgroundShader';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen selection:bg-blue-500/30">
+    <div className="min-h-screen selection:bg-blue-500/30 relative bg-[#020617]">
+      <BackgroundShader />
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <Partners />
         <About />

@@ -8,6 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+      @property --gradient-angle {
+        syntax: "<angle>";
+        initial-value: 0deg;
+        inherits: false;
+      }
+
       body {
         font-family: 'Inter', sans-serif;
         background-color: #020617;
@@ -32,17 +38,46 @@
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
-      .gradient-text {
-        background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      
+      @keyframes rotation {
+        0% { --gradient-angle: 0deg; }
+        100% { --gradient-angle: 360deg; }
       }
-      @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
+
+      .glowing-border {
+        position: relative;
+        background: #020617;
+        border-radius: 2.5rem;
       }
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
+
+      .glowing-border::before,
+      .glowing-border::after {
+        content: "";
+        position: absolute;
+        inset: -1.5px;
+        z-index: -1;
+        background: conic-gradient(
+          from var(--gradient-angle),
+          #3b82f6,
+          #a855f7,
+          #06b6d4,
+          #3b82f6
+        );
+        border-radius: inherit;
+        animation: rotation 3s linear infinite;
+        opacity: 0.4;
+        transition: opacity 0.5s;
+      }
+
+      .glowing-border::after {
+        filter: blur(30px);
+      }
+
+      .glowing-border:hover::before {
+        opacity: 1;
+      }
+      .glowing-border:hover::after {
+        opacity: 0.8;
       }
     </style>
   <script type="importmap">
@@ -52,7 +87,8 @@
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "three": "https://esm.sh/three@0.170.0"
   }
 }
 </script>
